@@ -1,0 +1,54 @@
+[gd_scene load_steps=10 format=3 uid="uid://bfrqewfgwr74t"]
+
+[ext_resource type="PackedScene" uid="uid://hksqe6qaqdvq" path="res://scenes/WorldTest.tscn" id="1_8scv1"]
+[ext_resource type="Script" path="res://scripts/BigWorldCollision.gd" id="2_x1ajw"]
+[ext_resource type="Script" path="res://scripts/CharacterBody3D.gd" id="3_vkkp7"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_t46n8"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_w0o73"]
+size = Vector2(24, 24)
+subdivide_width = 23
+subdivide_depth = 23
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_le3mm"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_txex5"]
+
+[sub_resource type="Sky" id="Sky_did7p"]
+sky_material = SubResource("ProceduralSkyMaterial_txex5")
+
+[sub_resource type="Environment" id="Environment_mqhdi"]
+background_mode = 2
+background_energy_multiplier = 1.91
+sky = SubResource("Sky_did7p")
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Node3D" parent="." node_paths=PackedStringArray("player_character") instance=ExtResource("1_8scv1")]
+player_character = NodePath("../CharacterBody3D")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="Node3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/StaticBody3D2"]
+shape = SubResource("ConcavePolygonShape3D_t46n8")
+script = ExtResource("2_x1ajw")
+height_map_path = "res://map_images/HEIGHTMAP.png"
+template_mesh = SubResource("PlaneMesh_w0o73")
+amplitude = 300.0
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+transform = Transform3D(5.45078, 0, 0, 0, 5.45078, 0, 0, 0, 5.45078, 7.13706, 8.64684, 0)
+floor_stop_on_slope = false
+floor_constant_speed = true
+floor_max_angle = 1.53589
+floor_snap_length = 0.0
+script = ExtResource("3_vkkp7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+shape = SubResource("CapsuleShape3D_le3mm")
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_mqhdi")

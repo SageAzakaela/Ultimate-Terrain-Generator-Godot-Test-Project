@@ -1,0 +1,51 @@
+[gd_scene load_steps=15 format=3 uid="uid://hksqe6qaqdvq"]
+
+[ext_resource type="Script" path="res://scripts/clipmap.gd" id="1_rabjt"]
+[ext_resource type="Shader" path="res://UltimateTerrain.gdshader" id="2_45jp0"]
+[ext_resource type="Texture2D" uid="uid://ua76aptwc2uy" path="res://map_images/BIOME_MASK.png" id="3_xx6tl"]
+[ext_resource type="Texture2D" uid="uid://ytu6waqqkf33" path="res://textures/DesertSand.png" id="4_so6q5"]
+[ext_resource type="Texture2D" uid="uid://dyyax7ny0531u" path="res://textures/Sandstone.png" id="5_qd5wn"]
+[ext_resource type="Texture2D" uid="uid://baxuqrjha46nh" path="res://map_images/HEIGHTMAP.png" id="6_g5n6p"]
+[ext_resource type="Texture2D" uid="uid://c5vrywrt1mip2" path="res://textures/DeadGrass.jpg" id="7_pd8dm"]
+[ext_resource type="Texture2D" uid="uid://bls4mmyck5c7m" path="res://textures/TCom_Grass0027_1_seamless_S.jpg" id="8_1jtlg"]
+[ext_resource type="Texture2D" uid="uid://cphebbgm0f7hk" path="res://map_images/ROADMASK_EMPTY.png" id="9_ekmgp"]
+[ext_resource type="Texture2D" uid="uid://copqj7vrdmc5t" path="res://map_images/NormalMap (3).png" id="9_mi33t"]
+[ext_resource type="Texture2D" uid="uid://chgov5owoox74" path="res://textures/TCom_Gravel0159_1_seamless_S.jpg" id="10_d6hht"]
+[ext_resource type="Texture2D" uid="uid://r67f3naw3r8b" path="res://textures/TCom_Gravel0070_1_seamless_S.jpg" id="11_vn0y6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lgr6r"]
+render_priority = 0
+shader = ExtResource("2_45jp0")
+shader_parameter/amplitude = 300.0
+shader_parameter/min_bottom_height = 0.0
+shader_parameter/min_middle_height = 30.0
+shader_parameter/max_top_height = 90.0
+shader_parameter/tex_size = 64.0
+shader_parameter/terrain_size = 3.0
+shader_parameter/heightmap = ExtResource("6_g5n6p")
+shader_parameter/normalmap = ExtResource("9_mi33t")
+shader_parameter/biome_mask = ExtResource("3_xx6tl")
+shader_parameter/bottom_texture_1 = ExtResource("4_so6q5")
+shader_parameter/middle_texture_1 = ExtResource("7_pd8dm")
+shader_parameter/top_texture_1 = ExtResource("5_qd5wn")
+shader_parameter/bottom_texture_2 = ExtResource("5_qd5wn")
+shader_parameter/middle_texture_2 = ExtResource("8_1jtlg")
+shader_parameter/top_texture_2 = ExtResource("11_vn0y6")
+shader_parameter/bottom_texture_3 = ExtResource("5_qd5wn")
+shader_parameter/middle_texture_3 = ExtResource("8_1jtlg")
+shader_parameter/top_texture_3 = ExtResource("8_1jtlg")
+shader_parameter/road_mask = ExtResource("9_ekmgp")
+shader_parameter/road_texture = ExtResource("10_d6hht")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_aqx3e"]
+size = Vector2(2048, 2048)
+subdivide_width = 2047
+subdivide_depth = 2047
+
+[node name="Clipmap" type="Node3D"]
+script = ExtResource("1_rabjt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.0834, 0, 0)
+material_override = SubResource("ShaderMaterial_lgr6r")
+mesh = SubResource("PlaneMesh_aqx3e")
